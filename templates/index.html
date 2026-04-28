@@ -3,45 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduQuest — Smart Career Advisor</title>
+<title>Narrative Architects — Top University Admissions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --ink: #0d0d14;
-    --paper: #f5f3ee;
-    --gold: #c9a84c;
-    --gold-light: #e8d5a3;
-    --gold-dark: #8a6f2e;
-    --cream: #faf8f3;
-    --muted: #7a7567;
-    --border: #e2ddd4;
+    --ink: #0f0e0b;
+    --parchment: #f7f4ef;
+    --gold: #c8a84b;
+    --gold-light: #e8d5a0;
+    --gold-dark: #8a6e28;
+    --warm-white: #fdfbf7;
+    --muted: #7c7567;
+    --border: #e0d9ce;
     --card-bg: #ffffff;
-    --shadow: 0 4px 40px rgba(13,13,20,0.10);
-    --radius: 18px;
+    --shadow: 0 8px 48px rgba(15,14,11,0.10);
+    --radius: 16px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
+    font-family: 'Jost', sans-serif;
+    background: var(--parchment);
     color: var(--ink);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
-  /* ─── NOISE TEXTURE OVERLAY ─── */
+  /* ─── GRAIN TEXTURE ─── */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
   }
@@ -50,73 +49,115 @@
   header {
     position: relative;
     z-index: 10;
-    padding: 40px 24px 28px;
+    padding: 48px 32px 36px;
     text-align: center;
     border-bottom: 1px solid var(--border);
-    background: var(--cream);
+    background: var(--warm-white);
   }
 
-  .logo-badge {
+  /* Decorative top rule */
+  header::before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto 24px;
+  }
+
+  .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    background: var(--ink);
-    color: var(--gold);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 600;
+    gap: 8px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
     font-size: 11px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 100px;
-    margin-bottom: 18px;
+    color: var(--gold-dark);
+    margin-bottom: 16px;
   }
 
-  .logo-badge .dot {
-    width: 6px; height: 6px;
-    background: var(--gold);
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
+  .eyebrow .star {
+    font-size: 14px;
+    color: var(--gold);
+    animation: starPulse 3s ease-in-out infinite;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.7); }
+  @keyframes starPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(1.2) rotate(15deg); opacity: 0.7; }
   }
 
   h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 5vw, 56px);
-    font-weight: 900;
-    line-height: 1.1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4.5vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
     color: var(--ink);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+    max-width: 700px;
+    margin: 0 auto;
   }
 
-  h1 span {
-    color: var(--gold);
+  h1 em {
+    color: var(--gold-dark);
     font-style: italic;
   }
 
-  .subtitle {
-    margin-top: 12px;
-    font-size: 15px;
-    color: var(--muted);
-    font-weight: 400;
-    letter-spacing: 0.01em;
+  /* Bottom decorative rule */
+  header::after {
+    content: '✦';
+    display: block;
+    font-size: 14px;
+    color: var(--gold);
+    margin-top: 20px;
+    letter-spacing: 0.3em;
   }
 
-  /* ─── SEARCH BAR ─── */
+  .subtitle {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ─── FEATURE PILLS ─── */
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .feature-pill {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 14px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── SEARCH SECTION ─── */
   .search-section {
     position: relative;
     z-index: 10;
-    background: var(--cream);
-    padding: 24px 24px 32px;
+    background: var(--warm-white);
+    padding: 28px 32px 36px;
     border-bottom: 1px solid var(--border);
   }
 
   .search-wrap {
-    max-width: 680px;
+    max-width: 700px;
     margin: 0 auto;
     display: flex;
     gap: 10px;
@@ -130,45 +171,49 @@
 
   .search-icon {
     position: absolute;
-    left: 16px;
+    left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--muted);
-    font-size: 18px;
+    color: var(--gold);
+    font-size: 16px;
     pointer-events: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
   }
 
   input[type="text"] {
     width: 100%;
-    padding: 16px 16px 16px 46px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
+    padding: 16px 18px 16px 48px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
     font-weight: 400;
     border: 1.5px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     background: #fff;
     color: var(--ink);
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    letter-spacing: 0.01em;
   }
 
-  input[type="text"]::placeholder { color: #b5afa6; }
+  input[type="text"]::placeholder { color: #bbb5a8; }
 
   input[type="text"]:focus {
     border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+    box-shadow: 0 0 0 3px rgba(200,168,75,0.12);
   }
 
   .btn-generate {
-    padding: 16px 28px;
+    padding: 16px 26px;
     background: var(--ink);
-    color: var(--gold);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
+    color: var(--gold-light);
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     white-space: nowrap;
     transition: background 0.2s, transform 0.15s;
@@ -177,15 +222,14 @@
     gap: 8px;
   }
 
-  .btn-generate:hover { background: #1e1e2e; transform: translateY(-1px); }
+  .btn-generate:hover { background: #1c1b16; transform: translateY(-1px); }
   .btn-generate:active { transform: translateY(0); }
+  .btn-generate svg { width: 14px; height: 14px; }
 
-  .btn-generate svg { width: 16px; height: 16px; }
-
-  /* ─── CHIPS ─── */
+  /* ─── QUICK CHIPS ─── */
   .chips {
-    max-width: 680px;
-    margin: 14px auto 0;
+    max-width: 700px;
+    margin: 16px auto 0;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -193,7 +237,7 @@
 
   .chip {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--muted);
     background: #fff;
     border: 1px solid var(--border);
@@ -201,90 +245,122 @@
     padding: 5px 14px;
     cursor: pointer;
     transition: all 0.2s;
+    letter-spacing: 0.02em;
   }
 
   .chip:hover {
     background: var(--ink);
-    color: var(--gold);
+    color: var(--gold-light);
     border-color: var(--ink);
   }
 
-  /* ─── MAIN CONTENT ─── */
+  /* ─── MAIN ─── */
   main {
     flex: 1;
-    padding: 40px 24px 120px;
+    padding: 44px 24px 120px;
     position: relative;
     z-index: 5;
   }
 
   /* ─── EMPTY STATE ─── */
   .empty-state {
-    max-width: 500px;
-    margin: 60px auto;
+    max-width: 520px;
+    margin: 50px auto;
     text-align: center;
   }
 
-  .empty-icon {
-    font-size: 64px;
-    margin-bottom: 20px;
-    opacity: 0.7;
+  .empty-ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 16px;
+    font-style: italic;
   }
 
   .empty-state h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .empty-state p {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--muted);
-    line-height: 1.6;
+    line-height: 1.7;
+  }
+
+  /* ─── FEATURE CARDS (shown in empty state) ─── */
+  .feature-grid {
+    max-width: 700px;
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .feature-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .feature-card .fc-icon { font-size: 24px; margin-bottom: 10px; }
+  .feature-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .feature-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
   }
 
   /* ─── LOADING ─── */
   .loading-wrap {
     display: none;
-    max-width: 680px;
+    max-width: 700px;
     margin: 0 auto;
-    padding: 60px 0;
+    padding: 70px 0;
     text-align: center;
   }
 
   .loading-wrap.active { display: block; }
 
   .loader-ring {
-    width: 52px;
-    height: 52px;
-    border: 3px solid var(--border);
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--border);
     border-top-color: var(--gold);
     border-radius: 50%;
     animation: spin 0.9s linear infinite;
-    margin: 0 auto 20px;
+    margin: 0 auto 18px;
   }
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .loading-text {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--muted);
-    font-weight: 500;
-    letter-spacing: 0.04em;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  .loading-text span {
-    display: inline-block;
-    animation: blink 1.4s infinite;
-  }
+  .loading-text span { display: inline-block; animation: blink 1.4s infinite; }
   .loading-text span:nth-child(2) { animation-delay: 0.2s; }
   .loading-text span:nth-child(3) { animation-delay: 0.4s; }
-
   @keyframes blink { 0%, 80%, 100% { opacity: 0; } 40% { opacity: 1; } }
 
   /* ─── RESULT CARD ─── */
-  #output {  margin: 0 auto; }
+  #output { max-width: 800px; margin: 0 auto; }
 
   .result-card {
     background: var(--card-bg);
@@ -296,62 +372,62 @@
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .card-header {
     background: var(--ink);
     padding: 28px 32px;
-    color: var(--gold-light);
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
   }
 
-  .card-header .icon { font-size: 28px; }
+  .card-header .icon { font-size: 26px; }
 
   .card-header-text small {
     display: block;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    font-size: 10px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 4px;
+    color: var(--gold-dark);
+    margin-bottom: 5px;
+    font-family: 'Jost', sans-serif;
   }
 
   .card-header-text strong {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
     font-weight: 700;
     color: #fff;
+    font-style: italic;
   }
 
-  .card-body {
-    padding: 32px;
-  }
+  .card-body { padding: 36px; }
 
-  /* ─── RESULT CONTENT STYLING ─── */
+  /* ─── AI RESULT STYLING ─── */
   .card-body h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 900;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
     color: var(--ink);
     margin: 0 0 24px;
     padding-bottom: 16px;
-    border-bottom: 2px solid var(--gold-light);
+    border-bottom: 1px solid var(--gold-light);
     letter-spacing: -0.01em;
   }
 
   .card-body h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
     font-weight: 700;
     color: var(--ink);
-    margin: 32px 0 12px;
+    margin: 30px 0 12px;
     display: flex;
     align-items: center;
     gap: 8px;
+    font-style: italic;
   }
 
   .card-body h3::after {
@@ -363,43 +439,41 @@
   }
 
   .card-body p {
-    font-size: 15px;
-    line-height: 1.75;
-    color: #3a3630;
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: #3d3830;
     margin: 10px 0;
   }
 
   .card-body ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0;
+    margin: 12px 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
   .card-body ul li {
-    font-size: 15px;
-    color: #3a3630;
-    line-height: 1.6;
+    font-size: 14.5px;
+    color: #3d3830;
+    line-height: 1.65;
     padding: 12px 16px;
-    background: var(--cream);
-    border-left: 3px solid var(--gold);
+    background: var(--parchment);
+    border-left: 2px solid var(--gold);
     border-radius: 0 8px 8px 0;
-    position: relative;
   }
 
-  /* ─── CONTACT BLOCK ─── */
+  /* Contact block */
   .card-body h3:last-of-type + p {
     background: var(--ink);
     color: var(--gold-light);
     padding: 20px 24px;
-    border-radius: 12px;
+    border-radius: 10px;
     font-size: 14px;
     line-height: 2;
   }
 
-  /* ─── DIVIDER ─── */
   .card-divider {
     height: 1px;
     background: var(--border);
@@ -407,48 +481,48 @@
   }
 
   .card-footer {
-    padding: 20px 32px;
+    padding: 18px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--cream);
+    background: var(--warm-white);
   }
 
   .card-footer-brand {
-    font-size: 13px;
-    font-weight: 600;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 700;
     color: var(--muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-style: italic;
   }
 
   .card-footer-brand span { color: var(--gold-dark); }
 
   .card-footer-tag {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--muted);
     background: var(--border);
     padding: 4px 12px;
     border-radius: 100px;
+    letter-spacing: 0.04em;
   }
 
-  /* ─── ERROR ─── */
   .error-card {
-    background: #fff5f5;
-    border: 1px solid #fcd5d5;
+    background: #fff8f8;
+    border: 1px solid #f5d0d0;
     border-radius: var(--radius);
-    padding: 32px;
+    padding: 36px;
     text-align: center;
     color: #8b3a3a;
   }
 
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
     .search-wrap { flex-direction: column; }
     .btn-generate { width: 100%; justify-content: center; }
     .card-body { padding: 20px; }
     .card-header { padding: 20px; }
     .card-footer { flex-direction: column; gap: 8px; text-align: center; }
+    .feature-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -456,12 +530,18 @@
 
 <!-- HEADER -->
 <header>
-  <div class="logo-badge">
-    <span class="dot"></span>
-    EduQuest AI Platform
+  <div class="eyebrow">
+    <span class="star">✦</span>
+    EduQuest AI <span class="star">✦</span>
   </div>
-  <h1>Your <span>Career</span> Roadmap,<br>Powered by Intelligence</h1>
-  <p class="subtitle">Describe your ambition — we'll map your entire journey with AI precision.</p>
+  <h1>Narrative Architects for<br><em>Top University Admissions</em></h1>
+  <p class="subtitle">We craft the story of your academic ambition — mapping your path to the world's most prestigious institutions with precision and purpose.</p>
+  <div class="features">
+    <span class="feature-pill">✦ Personalised Roadmaps</span>
+    <span class="feature-pill">✦ Admission Strategy</span>
+    <span class="feature-pill">✦ AI-Powered Guidance</span>
+    <span class="feature-pill">✦ Essay Narrative Building</span>
+  </div>
 </header>
 
 <!-- SEARCH -->
@@ -469,22 +549,22 @@
   <div class="search-wrap">
     <div class="search-input-wrap">
       <span class="search-icon">✦</span>
-      <input type="text" id="userInput" placeholder="e.g. I want to become a data scientist...">
+      <input type="text" id="userInput" placeholder="e.g. I want to get into Oxford for Medicine...">
     </div>
     <button class="btn-generate" onclick="generateCareer()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
-      Generate
+      Craft My Path
     </button>
   </div>
   <div class="chips">
-    <span class="chip" onclick="fillChip('I want to become a doctor')">🩺 Doctor</span>
-    <span class="chip" onclick="fillChip('I want to become a software engineer')">💻 Software Engineer</span>
-    <span class="chip" onclick="fillChip('I want to become a data scientist')">📊 Data Scientist</span>
-    <span class="chip" onclick="fillChip('I want to go into finance')">💰 Finance</span>
-    <span class="chip" onclick="fillChip('I want to become an architect')">🏛️ Architect</span>
-    <span class="chip" onclick="fillChip('I want to start my own business')">🚀 Entrepreneur</span>
+    <span class="chip" onclick="fillChip('I want to get into Oxford for Medicine')">🏛️ Oxford Medicine</span>
+    <span class="chip" onclick="fillChip('I want to study Computer Science at MIT')">💻 MIT CS</span>
+    <span class="chip" onclick="fillChip('I want to study Law at Harvard')">⚖️ Harvard Law</span>
+    <span class="chip" onclick="fillChip('I want to study Business at London School of Economics')">📊 LSE Business</span>
+    <span class="chip" onclick="fillChip('I want to study Architecture at Yale')">🏗️ Yale Architecture</span>
+    <span class="chip" onclick="fillChip('I want to study Film at NYU Tisch')">🎬 NYU Film</span>
   </div>
 </div>
 
@@ -492,15 +572,33 @@
 <main>
   <!-- Empty State -->
   <div class="empty-state" id="emptyState">
-    <div class="empty-icon">🧭</div>
-    <h2>Start your journey</h2>
-    <p>Enter a career goal above and our AI advisor will generate a complete, personalised roadmap — including salary insights, skill paths, and project ideas.</p>
+    <h2>Your Story Begins Here</h2>
+    <p>Tell us your dream university and subject. Our AI will architect a complete admissions roadmap — from academics and extracurriculars to personal statement strategy.</p>
+  </div>
+
+  <!-- Feature Cards in empty state -->
+  <div class="feature-grid" id="featureGrid">
+    <div class="feature-card">
+      <div class="fc-icon">📖</div>
+      <h4>Narrative Strategy</h4>
+      <p>We build a compelling personal story that top admissions officers remember.</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🗺️</div>
+      <h4>Academic Roadmap</h4>
+      <p>Step-by-step subject, grade, and qualification guidance for your target university.</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🏆</div>
+      <h4>Competitive Edge</h4>
+      <p>Extracurricular, research, and portfolio strategies that set you apart from the crowd.</p>
+    </div>
   </div>
 
   <!-- Loading -->
   <div class="loading-wrap" id="loadingWrap">
     <div class="loader-ring"></div>
-    <p class="loading-text">Crafting your roadmap<span>.</span><span>.</span><span>.</span></p>
+    <p class="loading-text">Architecting your narrative<span>.</span><span>.</span><span>.</span></p>
   </div>
 
   <!-- Output -->
@@ -519,15 +617,17 @@
     const output = document.getElementById('output');
     const loadingWrap = document.getElementById('loadingWrap');
     const emptyState = document.getElementById('emptyState');
+    const featureGrid = document.getElementById('featureGrid');
 
     if (!input) {
       inputField.focus();
-      inputField.style.borderColor = '#e07070';
+      inputField.style.borderColor = '#d07070';
       setTimeout(() => inputField.style.borderColor = '', 1200);
       return;
     }
 
     emptyState.style.display = 'none';
+    featureGrid.style.display = 'none';
     output.innerHTML = '';
     loadingWrap.classList.add('active');
 
@@ -545,17 +645,17 @@
       card.className = 'result-card';
       card.innerHTML = `
         <div class="card-header">
-          <div class="icon">🗺️</div>
+          <div class="icon">🏛️</div>
           <div class="card-header-text">
-            <small>Personalised Roadmap</small>
+            <small>Admissions Roadmap</small>
             <strong>${input.charAt(0).toUpperCase() + input.slice(1)}</strong>
           </div>
         </div>
         <div class="card-body">${(data.result || '').trim()}</div>
         <div class="card-divider"></div>
         <div class="card-footer">
-          <span class="card-footer-brand">Edu<span>Quest</span></span>
-          <span class="card-footer-tag">AI-generated • Verify with a counsellor</span>
+          <span class="card-footer-brand"><em>Narrative <span>Architects</span></em></span>
+          <span class="card-footer-tag">AI-generated · Verify with a counsellor</span>
         </div>
       `;
 
@@ -565,7 +665,7 @@
     } catch (err) {
       output.innerHTML = `
         <div class="error-card">
-          <h2 style="font-family:'Playfair Display',serif;margin-bottom:10px;">⚠️ Something went wrong</h2>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-style:italic;margin-bottom:10px;">Something went wrong</h2>
           <p>Please check your connection and try again.</p>
         </div>
       `;

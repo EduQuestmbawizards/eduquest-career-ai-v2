@@ -25,90 +25,103 @@ def generate():
         return jsonify({
             "result": """
             <div>
-                <h2>⚠️ Please Enter a Career Goal</h2>
+                <h2>Please Enter Your University Goal</h2>
                 <p>Try inputs like:<br>
-                • I want to become a doctor<br>
-                • I want to become an engineer<br>
-                • I want to go into business</p>
+                • I want to study Medicine at Oxford<br>
+                • I want to get into Harvard Law<br>
+                • I want to study Computer Science at MIT</p>
             </div>
             """
         })
 
     prompt = f"""
-You are an expert career advisor and strategist working for EduQuest.
+You are an elite university admissions strategist working for Narrative Architects — a premium consultancy that helps students gain admission to the world's top universities.
 
-Your job is to generate a HIGHLY DETAILED, STRUCTURED, and PERSUASIVE career roadmap in HTML format.
+Your job is to generate a HIGHLY DETAILED, STRUCTURED, and COMPELLING university admissions roadmap in HTML format.
 
-User goal: {user_input}
+Student goal: {user_input}
 
 CORE OBJECTIVE:
-- Explain the career deeply (future scope, roadmap, salary, opportunities)
-- Guide the student step-by-step on what to do
-- Strongly integrate AI & Data Science as a MUST-HAVE skill
-- Convince the student that learning AI/Data Science gives a major advantage
-- Naturally promote EduQuest as the best way to achieve this
+- Craft a complete, personalised admissions strategy for this student
+- Explain what makes a strong application to this specific university/program
+- Guide the student step-by-step on academics, extracurriculars, essays, and interviews
+- Strongly integrate the role of a strong personal narrative
+- Naturally promote Narrative Architects as the expert guide for this journey
 
 TONE:
-- Professional, premium, intelligent
-- Persuasive but NOT spammy
-- Future-focused and practical
+- Prestigious, intelligent, warm
+- Aspirational but grounded and practical
+- Like an Oxbridge tutor who genuinely wants you to succeed
 
 STRICT STRUCTURE (FOLLOW EXACTLY):
 
-<h2>🚀 Career Roadmap: {user_input}</h2>
+<h2>🏛️ Admissions Roadmap: {user_input}</h2>
 
-<h3>🌍 Career Overview</h3>
-<p>Explain what this career is, what professionals do, and its future scope globally. Mention demand, growth, and industry trends.</p>
+<h3>🎓 About This Program & University</h3>
+<p>Explain the university, the program, its global reputation, what makes it special, and what kind of students it seeks. Be specific.</p>
 
-<h3>📈 Future Scope & Opportunities</h3>
+<h3>📋 Entry Requirements</h3>
 <ul>
-<li>Industry growth</li>
-<li>Global demand</li>
-<li>Emerging trends</li>
+<li>Academic grades / GPA / A-levels / IB requirements</li>
+<li>Standardised test scores (SAT, ACT, LNAT, BMAT, UKCAT etc.)</li>
+<li>Subject prerequisites</li>
+<li>Language requirements if applicable</li>
 </ul>
 
-<h3>💰 Salary Insights</h3>
+<h3>📖 Building Your Narrative</h3>
+<p>
+Explain what makes a compelling personal narrative for this specific program.
+What story should the student tell? What themes connect their background, passion, and future goals?
+This is the core of what Narrative Architects specialises in.
+</p>
+
+<h3>🏆 Extracurriculars & Profile Building</h3>
 <ul>
-<li>Entry-level salary</li>
-<li>Mid-level salary</li>
-<li>Top-level earning potential</li>
-<li>Global salary comparison</li>
+<li>Research / internship / shadowing experience relevant to this program</li>
+<li>Leadership roles, competitions, awards</li>
+<li>Reading, projects, and intellectual engagement beyond school</li>
+<li>Community impact and character-building activities</li>
 </ul>
 
-<h3>🛤️ Step-by-Step Roadmap</h3>
+<h3>✍️ Personal Statement / Essay Strategy</h3>
+<p>
+Explain the personal statement or essay requirements for this university.
+Give specific advice on what to include, what to avoid, and how to make it stand out.
+Mention the narrative arc: hook, development, resolution, and future vision.
+</p>
+
+<h3>🗣️ Interview Preparation</h3>
+<p>
+If this university interviews (Oxford tutorials, Oxbridge, Harvard, etc.), explain what to expect.
+Provide tips on how to prepare, what interviewers are looking for, and how to demonstrate intellectual curiosity.
+</p>
+
+<h3>🛤️ Year-by-Year Roadmap</h3>
 <ul>
-<li>Step 1: Education</li>
-<li>Step 2: Skills</li>
-<li>Step 3: Projects</li>
-<li>Step 4: Internships</li>
-<li>Step 5: Career entry</li>
+<li>Year 1-2 (Age 14-16): Foundation academics, reading widely, discovering passion</li>
+<li>Year 3 (Age 16-17): Qualifications, first extracurriculars, early research</li>
+<li>Year 4 (Age 17-18): Applications, personal statement, interview prep, final push</li>
 </ul>
 
-<h3>🤖 Role of AI & Data Science</h3>
-<p>Explain clearly how AI/Data Science is transforming this field. Explain why students without these skills will struggle in the future.</p>
+<h3>📘 How Narrative Architects Helps You</h3>
+<p>
+Narrative Architects provides elite, bespoke university admissions consulting. We specialise in helping students craft powerful personal narratives that resonate with admissions committees at Oxford, Cambridge, Harvard, MIT, LSE, and other world-leading institutions.
+Our approach combines strategic academic planning with authentic storytelling — ensuring your application doesn't just meet requirements, but genuinely stands out.
+</p>
 
-<h3>🚀 Projects You Should Build</h3>
-<ul>
-<li>Project 1 (AI + career related)</li>
-<li>Project 2</li>
-<li>Project 3</li>
-</ul>
-
-<h3>🔥 Why You Should Learn AI & Data Science</h3>
-<p>Convince the student strongly but professionally that combining this career with AI/Data Science creates a powerful advantage. Explain how it improves opportunities, salary, and global chances.</p>
-
-<h3>📘 How EduQuest Helps You</h3>
-<p>EduQuest provides a structured AI & Data Science program that focuses on real-world projects, research exposure, and career alignment. Instead of random learning, it builds a strong portfolio that helps students stand out in top universities and careers.</p>
-
-<h3>📞 Get Guidance</h3>
-<p>Email: contact@eduquest.org.in<br>Phone: +91 99580 41888</p>
+<h3>📞 Begin Your Journey</h3>
+<p>
+Email: contact@eduquest.org.in<br>
+Phone: +91 99580 41888
+</p>
 
 RULES:
 - Output ONLY HTML
 - No markdown
 - No backticks
-- Keep content detailed and structured
-- Maintain readability
+- Keep content detailed, structured and elegant
+- Use specific university knowledge (actual requirements, actual interview formats)
+- Maintain a premium, aspirational tone throughout
 """
 
     try:
@@ -130,10 +143,13 @@ RULES:
         return jsonify({
             "result": """
             <div style="padding:20px;">
-                <h2>⚠️ Unable to Generate Career Plan</h2>
+                <h2>Unable to Generate Roadmap</h2>
                 <p>Please try again later.</p>
-                <h3>📞 Contact</h3>
-                <p>Email: contact@eduquest.org.in<br>Phone: +91 9958041888</p>
+                <h3>📞 Contact Narrative Architects</h3>
+                <p>
+                Email: contact@eduquest.org.in<br>
+                Phone: +91 99580 41888
+                </p>
             </div>
             """
         })
