@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 load_dotenv()
 
-# ✅ OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
@@ -27,12 +26,10 @@ def generate():
             "result": """
             <div>
                 <h2>⚠️ Please Enter a Career Goal</h2>
-                <p>
-                Try inputs like:<br>
+                <p>Try inputs like:<br>
                 • I want to become a doctor<br>
                 • I want to become an engineer<br>
-                • I want to go into business
-                </p>
+                • I want to go into business</p>
             </div>
             """
         })
@@ -61,10 +58,7 @@ STRICT STRUCTURE (FOLLOW EXACTLY):
 <h2>🚀 Career Roadmap: {user_input}</h2>
 
 <h3>🌍 Career Overview</h3>
-<p>
-Explain what this career is, what professionals do, and its future scope globally.
-Mention demand, growth, and industry trends.
-</p>
+<p>Explain what this career is, what professionals do, and its future scope globally. Mention demand, growth, and industry trends.</p>
 
 <h3>📈 Future Scope & Opportunities</h3>
 <ul>
@@ -91,10 +85,7 @@ Mention demand, growth, and industry trends.
 </ul>
 
 <h3>🤖 Role of AI & Data Science</h3>
-<p>
-Explain clearly how AI/Data Science is transforming this field.
-Explain why students without these skills will struggle in the future.
-</p>
+<p>Explain clearly how AI/Data Science is transforming this field. Explain why students without these skills will struggle in the future.</p>
 
 <h3>🚀 Projects You Should Build</h3>
 <ul>
@@ -104,22 +95,13 @@ Explain why students without these skills will struggle in the future.
 </ul>
 
 <h3>🔥 Why You Should Learn AI & Data Science</h3>
-<p>
-Convince the student strongly but professionally that combining this career with AI/Data Science creates a powerful advantage.
-Explain how it improves opportunities, salary, and global chances.
-</p>
+<p>Convince the student strongly but professionally that combining this career with AI/Data Science creates a powerful advantage. Explain how it improves opportunities, salary, and global chances.</p>
 
 <h3>📘 How EduQuest Helps You</h3>
-<p>
-EduQuest provides a structured AI & Data Science program that focuses on real-world projects, research exposure, and career alignment.
-Instead of random learning, it builds a strong portfolio that helps students stand out in top universities and careers.
-</p>
+<p>EduQuest provides a structured AI & Data Science program that focuses on real-world projects, research exposure, and career alignment. Instead of random learning, it builds a strong portfolio that helps students stand out in top universities and careers.</p>
 
 <h3>📞 Get Guidance</h3>
-<p>
-Email: contact@eduquest.org.in<br>
-Phone: +91 99580 41888
-</p>
+<p>Email: contact@eduquest.org.in<br>Phone: +91 99580 41888</p>
 
 RULES:
 - Output ONLY HTML
@@ -138,36 +120,25 @@ RULES:
 
         output = response.choices[0].message.content.strip()
 
-        if (
-            not output
-            or "<h2>" not in output
-            or "<ul>" not in output
-            or "```" in output
-        ):
+        if not output or "<h2>" not in output or "<ul>" not in output or "```" in output:
             raise ValueError("Invalid output")
 
         return jsonify({"result": output})
 
     except Exception as e:
-        print("ERROR:", str(e))  # 👈 logs for Render
-
+        print("ERROR:", str(e))
         return jsonify({
             "result": """
             <div style="padding:20px;">
                 <h2>⚠️ Unable to Generate Career Plan</h2>
                 <p>Please try again later.</p>
-
                 <h3>📞 Contact</h3>
-                <p>
-                Email: contact@eduquest.org.in<br>
-                Phone: +91 9958041888
-                </p>
+                <p>Email: contact@eduquest.org.in<br>Phone: +91 9958041888</p>
             </div>
             """
         })
 
 
-# 🔥 Render-ready run
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)

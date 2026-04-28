@@ -3,207 +3,580 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduQuest Smart Career Advisor</title>
+<title>EduQuest — Smart Career Advisor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-    html, body {
-        overflow-y: auto;
-    }
+  :root {
+    --ink: #0d0d14;
+    --paper: #f5f3ee;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --gold-dark: #8a6f2e;
+    --cream: #faf8f3;
+    --muted: #7a7567;
+    --border: #e2ddd4;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 40px rgba(13,13,20,0.10);
+    --radius: 18px;
+  }
 
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        display: flex;
-        flex-direction: column;
+  html { scroll-behavior: smooth; }
 
-        min-height: 100vh;   
-    }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    h1 {
-        text-align: center;
-        color: white;
-        margin: 20px 0 10px;
-    }
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    
-    #output {
-        flex: 1;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 80px;
-    }
+  /* ─── HEADER ─── */
+  header {
+    position: relative;
+    z-index: 10;
+    padding: 40px 24px 28px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--cream);
+  }
 
-    /* 🔥 FIXED CARD */
-    .card {
-        width: 100%;
-        max-width: 650px;
-        background: white;
-        border-radius: 16px;
-        padding: 25px 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        line-height: 1.7;
-        margin: 0 auto;
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 18px;
+  }
 
-        display: block;
-        overflow: hidden;   /* 👈 FIX */
-    }
-    .card * {
-        max-width: 100%;
-    }
+  .logo-badge .dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
 
-    .card h2, .card h3 {
-        margin-top: 18px;
-        color: #222;
-    }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
 
-    .card p {
-        margin: 8px 0;
-    }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
 
-    .card ul {
-        margin: 8px 0 8px 20px;
-    }
+  h1 span {
+    color: var(--gold);
+    font-style: italic;
+  }
 
-    /* 🔥 LOADING */
-    .spinner {
-        display: none;
-        margin: 20px auto;
-        border: 4px solid #eee;
-        border-top: 4px solid #667eea;
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        animation: spin 1s linear infinite;
-    }
+  .subtitle {
+    margin-top: 12px;
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
 
-    @keyframes spin {
-        100% { transform: rotate(360deg); }
-    }
+  /* ─── SEARCH BAR ─── */
+  .search-section {
+    position: relative;
+    z-index: 10;
+    background: var(--cream);
+    padding: 24px 24px 32px;
+    border-bottom: 1px solid var(--border);
+  }
 
-    /* 🔥 MODERN FOOTER */
-    .input-bar {
-        position: sticky;
-        bottom: 0;
-        background: #8356f6;
-        backdrop-filter: blur(10px);
-        padding: 12px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
-    }
+  .search-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 
-    /* 🔥 SMALL INPUT */
-    input {
-        width: 60%;
-        max-width: 400px;
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #b89a9a;
-        font-size: 14px;
-    }
+  .search-input-wrap {
+    flex: 1;
+    position: relative;
+  }
 
-    /* 🔥 BUTTON */
-    button {
-        padding: 12px 16px;
-        border: none;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: rgb(255, 255, 255);
-        cursor: pointer;
-        transition: 0.3s;
-    }
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 18px;
+    pointer-events: none;
+  }
 
-    button:hover {
-        opacity: 0.9;
-    }
+  input[type="text"] {
+    width: 100%;
+    padding: 16px 16px 16px 46px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input[type="text"]::placeholder { color: #b5afa6; }
+
+  input[type="text"]:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+  }
+
+  .btn-generate {
+    padding: 16px 28px;
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-generate:hover { background: #1e1e2e; transform: translateY(-1px); }
+  .btn-generate:active { transform: translateY(0); }
+
+  .btn-generate svg { width: 16px; height: 16px; }
+
+  /* ─── CHIPS ─── */
+  .chips {
+    max-width: 680px;
+    margin: 14px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .chip:hover {
+    background: var(--ink);
+    color: var(--gold);
+    border-color: var(--ink);
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  main {
+    flex: 1;
+    padding: 40px 24px 120px;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* ─── EMPTY STATE ─── */
+  .empty-state {
+    max-width: 500px;
+    margin: 60px auto;
+    text-align: center;
+  }
+
+  .empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  .empty-state h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .empty-state p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── LOADING ─── */
+  .loading-wrap {
+    display: none;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 0;
+    text-align: center;
+  }
+
+  .loading-wrap.active { display: block; }
+
+  .loader-ring {
+    width: 52px;
+    height: 52px;
+    border: 3px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-text {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .loading-text span {
+    display: inline-block;
+    animation: blink 1.4s infinite;
+  }
+  .loading-text span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-text span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink { 0%, 80%, 100% { opacity: 0; } 40% { opacity: 1; } }
+
+  /* ─── RESULT CARD ─── */
+  #output {  margin: 0 auto; }
+
+  .result-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    animation: fadeUp 0.5s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-header {
+    background: var(--ink);
+    padding: 28px 32px;
+    color: var(--gold-light);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card-header .icon { font-size: 28px; }
+
+  .card-header-text small {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .card-header-text strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .card-body {
+    padding: 32px;
+  }
+
+  /* ─── RESULT CONTENT STYLING ─── */
+  .card-body h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--ink);
+    margin: 0 0 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--gold-light);
+    letter-spacing: -0.01em;
+  }
+
+  .card-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 32px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-body h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 8px;
+  }
+
+  .card-body p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #3a3630;
+    margin: 10px 0;
+  }
+
+  .card-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-body ul li {
+    font-size: 15px;
+    color: #3a3630;
+    line-height: 1.6;
+    padding: 12px 16px;
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    position: relative;
+  }
+
+  /* ─── CONTACT BLOCK ─── */
+  .card-body h3:last-of-type + p {
+    background: var(--ink);
+    color: var(--gold-light);
+    padding: 20px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 2;
+  }
+
+  /* ─── DIVIDER ─── */
+  .card-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 32px;
+  }
+
+  .card-footer {
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--cream);
+  }
+
+  .card-footer-brand {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .card-footer-brand span { color: var(--gold-dark); }
+
+  .card-footer-tag {
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--border);
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  /* ─── ERROR ─── */
+  .error-card {
+    background: #fff5f5;
+    border: 1px solid #fcd5d5;
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    color: #8b3a3a;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .search-wrap { flex-direction: column; }
+    .btn-generate { width: 100%; justify-content: center; }
+    .card-body { padding: 20px; }
+    .card-header { padding: 20px; }
+    .card-footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
 </style>
 </head>
-
 <body>
 
-<h1>🚀 EduQuest Smart Career Advisor</h1>
+<!-- HEADER -->
+<header>
+  <div class="logo-badge">
+    <span class="dot"></span>
+    EduQuest AI Platform
+  </div>
+  <h1>Your <span>Career</span> Roadmap,<br>Powered by Intelligence</h1>
+  <p class="subtitle">Describe your ambition — we'll map your entire journey with AI precision.</p>
+</header>
 
-<div id="output"></div>
-
-<div class="spinner" id="spinner"></div>
-
-<div class="input-bar">
-    <input type="text" id="userInput" placeholder="e.g. I want to become a doctor">
-    <button onclick="generateCareer()">Generate</button>
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-wrap">
+    <div class="search-input-wrap">
+      <span class="search-icon">✦</span>
+      <input type="text" id="userInput" placeholder="e.g. I want to become a data scientist...">
+    </div>
+    <button class="btn-generate" onclick="generateCareer()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+      Generate
+    </button>
+  </div>
+  <div class="chips">
+    <span class="chip" onclick="fillChip('I want to become a doctor')">🩺 Doctor</span>
+    <span class="chip" onclick="fillChip('I want to become a software engineer')">💻 Software Engineer</span>
+    <span class="chip" onclick="fillChip('I want to become a data scientist')">📊 Data Scientist</span>
+    <span class="chip" onclick="fillChip('I want to go into finance')">💰 Finance</span>
+    <span class="chip" onclick="fillChip('I want to become an architect')">🏛️ Architect</span>
+    <span class="chip" onclick="fillChip('I want to start my own business')">🚀 Entrepreneur</span>
+  </div>
 </div>
 
+<!-- MAIN -->
+<main>
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">🧭</div>
+    <h2>Start your journey</h2>
+    <p>Enter a career goal above and our AI advisor will generate a complete, personalised roadmap — including salary insights, skill paths, and project ideas.</p>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-wrap" id="loadingWrap">
+    <div class="loader-ring"></div>
+    <p class="loading-text">Crafting your roadmap<span>.</span><span>.</span><span>.</span></p>
+  </div>
+
+  <!-- Output -->
+  <div id="output"></div>
+</main>
+
 <script>
-async function generateCareer() {
-    const inputField = document.getElementById("userInput");
+  function fillChip(text) {
+    document.getElementById('userInput').value = text;
+    document.getElementById('userInput').focus();
+  }
+
+  async function generateCareer() {
+    const inputField = document.getElementById('userInput');
     const input = inputField.value.trim();
-    const output = document.getElementById("output");
-    const spinner = document.getElementById("spinner");
+    const output = document.getElementById('output');
+    const loadingWrap = document.getElementById('loadingWrap');
+    const emptyState = document.getElementById('emptyState');
 
     if (!input) {
-        alert("Enter your career goal!");
-        return;
+      inputField.focus();
+      inputField.style.borderColor = '#e07070';
+      setTimeout(() => inputField.style.borderColor = '', 1200);
+      return;
     }
 
-    // 🔄 Show loading
-    spinner.style.display = "block";
-    output.innerHTML = "";
+    emptyState.style.display = 'none';
+    output.innerHTML = '';
+    loadingWrap.classList.add('active');
 
     try {
-        const response = await fetch("/generate", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ query: input })
-        });
+      const response = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: input })
+      });
 
-        if (!response.ok) {
-            throw new Error("Server error");
-        }
+      if (!response.ok) throw new Error('Server error');
+      const data = await response.json();
 
-        const data = await response.json();
+      const card = document.createElement('div');
+      card.className = 'result-card';
+      card.innerHTML = `
+        <div class="card-header">
+          <div class="icon">🗺️</div>
+          <div class="card-header-text">
+            <small>Personalised Roadmap</small>
+            <strong>${input.charAt(0).toUpperCase() + input.slice(1)}</strong>
+          </div>
+        </div>
+        <div class="card-body">${(data.result || '').trim()}</div>
+        <div class="card-divider"></div>
+        <div class="card-footer">
+          <span class="card-footer-brand">Edu<span>Quest</span></span>
+          <span class="card-footer-tag">AI-generated • Verify with a counsellor</span>
+        </div>
+      `;
 
-        // 🧹 Clean + safe HTML
-        const cleanHTML = (data.result || "").trim();
+      output.appendChild(card);
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        // 🔥 Create wrapper (fixes layout issue)
-        const wrapper = document.createElement("div");
-        wrapper.className = "card";
-
-        // IMPORTANT: prevents broken rendering
-        wrapper.innerHTML = cleanHTML;
-
-        // Clear and insert
-        output.innerHTML = "";
-        output.appendChild(wrapper);
-
-        // 🔽 Smooth scroll to result
-        wrapper.scrollIntoView({ behavior: "smooth" });
-
-    } catch (error) {
-        output.innerHTML = `
-            <div class="card">
-                <h2>⚠️ Error</h2>
-                <p>Something went wrong. Please try again.</p>
-            </div>
-        `;
+    } catch (err) {
+      output.innerHTML = `
+        <div class="error-card">
+          <h2 style="font-family:'Playfair Display',serif;margin-bottom:10px;">⚠️ Something went wrong</h2>
+          <p>Please check your connection and try again.</p>
+        </div>
+      `;
     } finally {
-        spinner.style.display = "none";
+      loadingWrap.classList.remove('active');
     }
-}
+  }
 
-
-// 🔥 ENTER KEY SUPPORT
-document.getElementById("userInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        generateCareer();
-    }
-});
+  document.getElementById('userInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') generateCareer();
+  });
 </script>
-
 </body>
 </html>
