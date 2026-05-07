@@ -35,7 +35,6 @@
     flex-direction: column;
   }
 
-  /* ─── GRAIN TEXTURE ─── */
   body::before {
     content: '';
     position: fixed;
@@ -55,7 +54,6 @@
     background: var(--warm-white);
   }
 
-  /* Decorative top rule */
   header::before {
     content: '';
     display: block;
@@ -69,7 +67,6 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: 'Jost', sans-serif;
     font-weight: 500;
     font-size: 11px;
     letter-spacing: 0.22em;
@@ -78,12 +75,7 @@
     margin-bottom: 16px;
   }
 
-  .eyebrow .star {
-    font-size: 14px;
-    color: var(--gold);
-    animation: starPulse 3s ease-in-out infinite;
-  }
-
+  .eyebrow .star { font-size: 14px; color: var(--gold); animation: starPulse 3s ease-in-out infinite; }
   @keyframes starPulse {
     0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
     50% { transform: scale(1.2) rotate(15deg); opacity: 0.7; }
@@ -94,18 +86,12 @@
     font-size: clamp(28px, 4.5vw, 52px);
     font-weight: 700;
     line-height: 1.15;
-    color: var(--ink);
     letter-spacing: -0.01em;
     max-width: 700px;
     margin: 0 auto;
   }
+  h1 em { color: var(--gold-dark); font-style: italic; }
 
-  h1 em {
-    color: var(--gold-dark);
-    font-style: italic;
-  }
-
-  /* Bottom decorative rule */
   header::after {
     content: '✦';
     display: block;
@@ -116,18 +102,13 @@
   }
 
   .subtitle {
-    margin-top: 14px;
+    margin: 14px auto 0;
     font-size: 14px;
     color: var(--muted);
-    font-weight: 400;
-    letter-spacing: 0.03em;
     line-height: 1.6;
     max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
-  /* ─── FEATURE PILLS ─── */
   .features {
     display: flex;
     flex-wrap: wrap;
@@ -140,543 +121,921 @@
     font-size: 11px;
     font-weight: 500;
     color: var(--muted);
-    background: transparent;
     border: 1px solid var(--border);
     border-radius: 100px;
     padding: 5px 14px;
     letter-spacing: 0.06em;
   }
 
-  /* ─── SEARCH SECTION ─── */
-  .search-section {
-    position: relative;
-    z-index: 10;
-    background: var(--warm-white);
-    padding: 28px 32px 36px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .search-wrap {
-    max-width: 700px;
-    margin: 0 auto;
+  /* ══════════════════════════════════════
+     INTAKE FORM OVERLAY
+  ══════════════════════════════════════ */
+  #intakeOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,14,11,0.72);
+    z-index: 200;
     display: flex;
-    gap: 10px;
     align-items: center;
+    justify-content: center;
+    padding: 16px;
+    backdrop-filter: blur(4px);
   }
 
-  .search-input-wrap {
-    flex: 1;
-    position: relative;
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gold);
-    font-size: 16px;
-    pointer-events: none;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-  }
-
-  input[type="text"] {
+  .intake-modal {
+    background: var(--warm-white);
+    border-radius: 20px;
     width: 100%;
-    padding: 16px 18px 16px 48px;
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
+    max-width: 680px;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 32px 100px rgba(15,14,11,0.32);
+    animation: modalIn 0.4s ease;
+    overflow: hidden;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(28px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .intake-top {
+    background: var(--ink);
+    padding: 28px 32px 22px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .intake-top .badge {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .intake-top h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    font-style: italic;
+    margin-bottom: 5px;
+  }
+
+  .intake-top p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.03em;
+  }
+
+  /* Progress */
+  .progress-wrap {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding: 20px 32px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--warm-white);
+    flex-shrink: 0;
+  }
+
+  .prog-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .prog-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all 0.3s;
+  }
+
+  .prog-dot.active { border-color: var(--gold); background: var(--gold); color: #fff; }
+  .prog-dot.done { border-color: var(--gold-dark); background: var(--gold-dark); color: #fff; font-size: 13px; }
+
+  .prog-label {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+
+  .prog-label.active { color: var(--gold-dark); }
+
+  .prog-line {
+    width: 60px;
+    height: 1.5px;
+    background: var(--border);
+    margin-top: 14px;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+
+  .prog-line.done { background: var(--gold-dark); }
+
+  /* Form body */
+  .intake-body {
+    padding: 28px 32px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .form-step { display: none; }
+  .form-step.visible { display: block; animation: stepIn 0.3s ease; }
+
+  @keyframes stepIn {
+    from { opacity: 0; transform: translateX(12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .step-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .step-sub {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 22px;
+    letter-spacing: 0.02em;
+  }
+
+  .fg {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .f { display: flex; flex-direction: column; gap: 5px; }
+  .f.s2 { grid-column: span 2; }
+
+  .f label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+
+  .f label .opt {
     font-weight: 400;
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 10px;
+    margin-left: 3px;
+  }
+
+  .f input,
+  .f select,
+  .f textarea {
+    width: 100%;
+    padding: 11px 14px;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
     border: 1.5px solid var(--border);
     border-radius: 10px;
     background: #fff;
     color: var(--ink);
     outline: none;
-    transition: border-color 0.25s, box-shadow 0.25s;
-    letter-spacing: 0.01em;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
   }
 
-  input[type="text"]::placeholder { color: #bbb5a8; }
+  .f input::placeholder, .f textarea::placeholder { color: #bdb8b0; }
 
-  input[type="text"]:focus {
+  .f input:focus, .f select:focus, .f textarea:focus {
     border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(200,168,75,0.12);
+    box-shadow: 0 0 0 3px rgba(200,168,75,0.11);
   }
 
-  .btn-generate {
-    padding: 16px 26px;
+  .f input.err, .f select.err { border-color: #c0392b; }
+
+  .f select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%237c7567' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    padding-right: 34px;
+    cursor: pointer;
+  }
+
+  .f textarea { resize: vertical; min-height: 80px; }
+
+  /* Radio pills */
+  .radio-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .r-opt { position: relative; }
+  .r-opt input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  .r-opt label {
+    display: inline-block;
+    padding: 7px 15px;
+    border: 1.5px solid var(--border);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: none;
+    letter-spacing: 0.03em;
+  }
+
+  .r-opt input:checked + label {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: #fff;
+  }
+
+  /* Footer */
+  .intake-foot {
+    padding: 18px 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--warm-white);
+    flex-shrink: 0;
+  }
+
+  .btn-back {
+    padding: 11px 20px;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-back:hover { border-color: var(--muted); color: var(--ink); }
+
+  .btn-next {
+    padding: 11px 24px;
     background: var(--ink);
     color: var(--gold-light);
     font-family: 'Jost', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    white-space: nowrap;
     transition: background 0.2s, transform 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  }
+  .btn-next:hover { background: #1c1b16; transform: translateY(-1px); }
+  .btn-next:active { transform: translateY(0); }
+  .btn-next:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .step-ct { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+
+  /* ══════════════════════════════════════
+     MAIN APP
+  ══════════════════════════════════════ */
+  #mainApp { display: none; flex-direction: column; min-height: 100vh; }
+
+  .search-section {
+    position: relative; z-index: 10;
+    background: var(--warm-white);
+    padding: 28px 32px 36px;
+    border-bottom: 1px solid var(--border);
   }
 
+  .search-wrap { max-width: 700px; margin: 0 auto; display: flex; gap: 10px; align-items: center; }
+
+  .search-input-wrap { flex: 1; position: relative; }
+  .search-icon {
+    position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+    color: var(--gold); font-size: 16px; pointer-events: none;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+  }
+
+  #userInput {
+    width: 100%;
+    padding: 16px 18px 16px 48px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  #userInput::placeholder { color: #bbb5a8; }
+  #userInput:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,168,75,0.12); }
+
+  .btn-generate {
+    padding: 16px 26px; background: var(--ink); color: var(--gold-light);
+    font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; border: none;
+    border-radius: 10px; cursor: pointer; white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
   .btn-generate:hover { background: #1c1b16; transform: translateY(-1px); }
-  .btn-generate:active { transform: translateY(0); }
   .btn-generate svg { width: 14px; height: 14px; }
 
-  /* ─── QUICK CHIPS ─── */
-  .chips {
-    max-width: 700px;
-    margin: 16px auto 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
+  .chips { max-width: 700px; margin: 16px auto 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--muted);
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 5px 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.02em;
+    font-size: 12px; color: var(--muted); background: #fff;
+    border: 1px solid var(--border); border-radius: 100px; padding: 5px 14px;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  .chip:hover { background: var(--ink); color: var(--gold-light); border-color: var(--ink); }
+
+  main { flex: 1; padding: 44px 24px 120px; position: relative; z-index: 5; }
+
+  /* Profile banner */
+  .profile-banner {
+    max-width: 800px; margin: 0 auto 24px;
+    background: var(--warm-white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 22px;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .p-avatar {
+    width: 42px; height: 42px; border-radius: 50%; background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 17px;
+    color: var(--gold-light); font-weight: 700; flex-shrink: 0;
+  }
+  .p-info { flex: 1; min-width: 0; }
+  .p-info strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; }
+  .p-info small { font-size: 11.5px; color: var(--muted); }
+  .p-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .p-tag {
+    font-size: 11px; color: var(--gold-dark);
+    background: rgba(200,168,75,0.1); border: 1px solid var(--gold-light);
+    border-radius: 100px; padding: 3px 10px; font-weight: 500;
   }
 
-  .chip:hover {
-    background: var(--ink);
-    color: var(--gold-light);
-    border-color: var(--ink);
-  }
+  .empty-state { max-width: 520px; margin: 50px auto; text-align: center; }
+  .empty-state h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
-  /* ─── MAIN ─── */
-  main {
-    flex: 1;
-    padding: 44px 24px 120px;
-    position: relative;
-    z-index: 5;
-  }
-
-  /* ─── EMPTY STATE ─── */
-  .empty-state {
-    max-width: 520px;
-    margin: 50px auto;
-    text-align: center;
-  }
-
-  .empty-ornament {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px;
-    color: var(--gold);
-    opacity: 0.5;
-    margin-bottom: 16px;
-    font-style: italic;
-  }
-
-  .empty-state h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 12px;
-  }
-
-  .empty-state p {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  /* ─── FEATURE CARDS (shown in empty state) ─── */
-  .feature-grid {
-    max-width: 700px;
-    margin: 40px auto 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-
-  .feature-card {
-    background: var(--warm-white);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 16px;
-    text-align: center;
-  }
-
+  .feature-grid { max-width: 700px; margin: 40px auto 0; display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .feature-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px; text-align: center; }
   .feature-card .fc-icon { font-size: 24px; margin-bottom: 10px; }
-  .feature-card h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 6px;
-  }
-  .feature-card p {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+  .feature-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .feature-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-  /* ─── LOADING ─── */
-  .loading-wrap {
-    display: none;
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 70px 0;
-    text-align: center;
-  }
-
+  .loading-wrap { display: none; max-width: 700px; margin: 0 auto; padding: 70px 0; text-align: center; }
   .loading-wrap.active { display: block; }
-
-  .loader-ring {
-    width: 48px;
-    height: 48px;
-    border: 2px solid var(--border);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
-    margin: 0 auto 18px;
-  }
-
+  .loader-ring { width: 48px; height: 48px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 18px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  .loading-text {
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
+  .loading-text { font-size: 13px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   .loading-text span { display: inline-block; animation: blink 1.4s infinite; }
   .loading-text span:nth-child(2) { animation-delay: 0.2s; }
   .loading-text span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes blink { 0%, 80%, 100% { opacity: 0; } 40% { opacity: 1; } }
+  @keyframes blink { 0%,80%,100% { opacity:0; } 40% { opacity:1; } }
 
-  /* ─── RESULT CARD ─── */
   #output { max-width: 800px; margin: 0 auto; }
 
-  .result-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    animation: fadeUp 0.5s ease;
-  }
+  .result-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; animation: fadeUp 0.5s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .card-header {
-    background: var(--ink);
-    padding: 28px 32px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
+  .card-header { background: var(--ink); padding: 28px 32px; display: flex; align-items: center; gap: 14px; }
   .card-header .icon { font-size: 26px; }
-
-  .card-header-text small {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    margin-bottom: 5px;
-    font-family: 'Jost', sans-serif;
-  }
-
-  .card-header-text strong {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    font-style: italic;
-  }
+  .card-header-text small { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 5px; }
+  .card-header-text strong { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: #fff; font-style: italic; }
 
   .card-body { padding: 36px; }
+  .card-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; margin: 0 0 24px; padding-bottom: 16px; border-bottom: 1px solid var(--gold-light); }
+  .card-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 700; margin: 30px 0 12px; display: flex; align-items: center; gap: 8px; font-style: italic; }
+  .card-body h3::after { content:''; flex:1; height:1px; background: var(--border); margin-left:8px; }
+  .card-body p { font-size: 14.5px; line-height: 1.8; color: #3d3830; margin: 10px 0; }
+  .card-body ul { list-style: none; padding: 0; margin: 12px 0; display: flex; flex-direction: column; gap: 8px; }
+  .card-body ul li { font-size: 14.5px; color: #3d3830; line-height: 1.65; padding: 12px 16px; background: var(--parchment); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0; }
 
-  /* ─── AI RESULT STYLING ─── */
-  .card-body h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 0 0 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--gold-light);
-    letter-spacing: -0.01em;
-  }
-
-  .card-body h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 30px 0 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-style: italic;
-  }
-
-  .card-body h3::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    margin-left: 8px;
-  }
-
-  .card-body p {
-    font-size: 14.5px;
-    line-height: 1.8;
-    color: #3d3830;
-    margin: 10px 0;
-  }
-
-  .card-body ul {
-    list-style: none;
-    padding: 0;
-    margin: 12px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .card-body ul li {
-    font-size: 14.5px;
-    color: #3d3830;
-    line-height: 1.65;
-    padding: 12px 16px;
-    background: var(--parchment);
-    border-left: 2px solid var(--gold);
-    border-radius: 0 8px 8px 0;
-  }
-
-  /* Contact block */
-  .card-body h3:last-of-type + p {
-    background: var(--ink);
-    color: var(--gold-light);
-    padding: 20px 24px;
-    border-radius: 10px;
-    font-size: 14px;
-    line-height: 2;
-  }
-
-  .card-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 0 32px;
-  }
-
-  .card-footer {
-    padding: 18px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--warm-white);
-  }
-
-  .card-footer-brand {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--muted);
-    font-style: italic;
-  }
-
+  .card-divider { height:1px; background: var(--border); margin: 0 32px; }
+  .card-footer { padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; background: var(--warm-white); }
+  .card-footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 700; color: var(--muted); font-style: italic; }
   .card-footer-brand span { color: var(--gold-dark); }
-
-  .card-footer-tag {
-    font-size: 11px;
-    color: var(--muted);
-    background: var(--border);
-    padding: 4px 12px;
-    border-radius: 100px;
-    letter-spacing: 0.04em;
-  }
-
-  .error-card {
-    background: #fff8f8;
-    border: 1px solid #f5d0d0;
-    border-radius: var(--radius);
-    padding: 36px;
-    text-align: center;
-    color: #8b3a3a;
-  }
+  .card-footer-tag { font-size: 11px; color: var(--muted); background: var(--border); padding: 4px 12px; border-radius: 100px; letter-spacing: 0.04em; }
+  .error-card { background: #fff8f8; border: 1px solid #f5d0d0; border-radius: var(--radius); padding: 36px; text-align: center; color: #8b3a3a; }
 
   @media (max-width: 640px) {
+    .fg { grid-template-columns: 1fr; }
+    .f.s2 { grid-column: span 1; }
+    .intake-body { padding: 18px; }
+    .intake-foot { padding: 14px 18px; flex-wrap: wrap; gap: 10px; }
     .search-wrap { flex-direction: column; }
     .btn-generate { width: 100%; justify-content: center; }
     .card-body { padding: 20px; }
-    .card-header { padding: 20px; }
-    .card-footer { flex-direction: column; gap: 8px; text-align: center; }
     .feature-grid { grid-template-columns: 1fr; }
+    .prog-line { width: 32px; }
+    .prog-label { display: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="eyebrow">
-    <span class="star">✦</span>
-    EduQuest <span class="star">✦</span>
-  </div>
-  <h1>Narrative Architects for<br><em>Top University Admissions</em></h1>
-  <p class="subtitle">We craft the story of your academic ambition — mapping your path to the world's most prestigious institutions with precision and purpose.</p>
-  <div class="features">
-    <span class="feature-pill">✦ Personalised Roadmaps</span>
-    <span class="feature-pill">✦ Admission Strategy</span>
-    <span class="feature-pill">✦ AI-Powered Guidance</span>
-    <span class="feature-pill">✦ Essay Narrative Building</span>
-  </div>
-</header>
+<!-- ══════════════════════════════════════
+     INTAKE FORM OVERLAY
+══════════════════════════════════════ -->
+<div id="intakeOverlay">
+  <div class="intake-modal">
 
-<!-- SEARCH -->
-<div class="search-section">
-  <div class="search-wrap">
-    <div class="search-input-wrap">
-      <span class="search-icon">✦</span>
-      <input type="text" id="userInput" placeholder="e.g. I want to get into Oxford for Medicine...">
+    <div class="intake-top">
+      <span class="badge">✦ Narrative Architects · EduQuest ✦</span>
+      <h2>Tell Us About Yourself</h2>
+      <p>Complete your profile so we can craft a truly personalised admissions roadmap.</p>
     </div>
-    <button class="btn-generate" onclick="generateCareer()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-      Craft My Path
-    </button>
-  </div>
-  <div class="chips">
-    <span class="chip" onclick="fillChip('I want to get into Oxford for Medicine')">🏛️ Oxford Medicine</span>
-    <span class="chip" onclick="fillChip('I want to study Computer Science at MIT')">💻 MIT CS</span>
-    <span class="chip" onclick="fillChip('I want to study Law at Harvard')">⚖️ Harvard Law</span>
-    <span class="chip" onclick="fillChip('I want to study Business at London School of Economics')">📊 LSE Business</span>
-    <span class="chip" onclick="fillChip('I want to study Architecture at Yale')">🏗️ Yale Architecture</span>
-    <span class="chip" onclick="fillChip('I want to study Film at NYU Tisch')">🎬 NYU Film</span>
+
+    <!-- Progress bar -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="prog-step">
+        <div class="prog-dot active" id="pd1">1</div>
+        <div class="prog-label active" id="pl1">Personal</div>
+      </div>
+      <div class="prog-line" id="pline1"></div>
+      <div class="prog-step">
+        <div class="prog-dot" id="pd2">2</div>
+        <div class="prog-label" id="pl2">Academic</div>
+      </div>
+      <div class="prog-line" id="pline2"></div>
+      <div class="prog-step">
+        <div class="prog-dot" id="pd3">3</div>
+        <div class="prog-label" id="pl3">Scores</div>
+      </div>
+      <div class="prog-line" id="pline3"></div>
+      <div class="prog-step">
+        <div class="prog-dot" id="pd4">4</div>
+        <div class="prog-label" id="pl4">Goals</div>
+      </div>
+    </div>
+
+    <div class="intake-body" id="intakeBody">
+
+      <!-- STEP 1: Personal -->
+      <div class="form-step visible" id="fs1">
+        <p class="step-heading">Personal Details</p>
+        <p class="step-sub">Basic information to personalise your experience.</p>
+        <div class="fg">
+          <div class="f s2">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="e.g. Aryan Sharma">
+          </div>
+          <div class="f">
+            <label for="age">Age</label>
+            <input type="number" id="age" placeholder="e.g. 17" min="10" max="45">
+          </div>
+          <div class="f">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+91 99580 41888">
+          </div>
+          <div class="f s2">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@example.com">
+          </div>
+          <div class="f">
+            <label for="country">Country</label>
+            <input type="text" id="country" placeholder="e.g. India">
+          </div>
+          <div class="f">
+            <label for="city">Current City</label>
+            <input type="text" id="city" placeholder="e.g. Delhi">
+          </div>
+          <div class="f s2">
+            <label for="nationality">Nationality</label>
+            <input type="text" id="nationality" placeholder="e.g. Indian">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Academic -->
+      <div class="form-step" id="fs2">
+        <p class="step-heading">Academic Background</p>
+        <p class="step-sub">Where are you in your education journey?</p>
+        <div class="fg">
+          <div class="f s2">
+            <label>Current Education Level</label>
+            <div class="radio-row">
+              <div class="r-opt"><input type="radio" name="edu" id="e10" value="10th"><label for="e10">10th Grade</label></div>
+              <div class="r-opt"><input type="radio" name="edu" id="e12" value="12th"><label for="e12">12th Grade</label></div>
+              <div class="r-opt"><input type="radio" name="edu" id="edip" value="Diploma"><label for="edip">Diploma</label></div>
+              <div class="r-opt"><input type="radio" name="edu" id="ebac" value="Bachelor's"><label for="ebac">Bachelor's</label></div>
+              <div class="r-opt"><input type="radio" name="edu" id="emas" value="Master's"><label for="emas">Master's</label></div>
+            </div>
+          </div>
+          <div class="f s2">
+            <label for="fos">Field of Study</label>
+            <input type="text" id="fos" placeholder="e.g. Science / Commerce / Engineering">
+          </div>
+          <div class="f">
+            <label for="cgpa">CGPA / Percentage</label>
+            <input type="text" id="cgpa" placeholder="e.g. 9.2 / 92%">
+          </div>
+          <div class="f">
+            <label for="grady">Year of Graduation</label>
+            <input type="number" id="grady" placeholder="e.g. 2026" min="2018" max="2035">
+          </div>
+          <div class="f">
+            <label for="gapyr">Gap Years <span class="opt">(if any)</span></label>
+            <input type="number" id="gapyr" placeholder="0" min="0" max="10" value="0">
+          </div>
+          <div class="f">
+            <label for="workexp">Work Experience <span class="opt">(optional)</span></label>
+            <input type="text" id="workexp" placeholder="e.g. 1 yr at Google">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Scores -->
+      <div class="form-step" id="fs3">
+        <p class="step-heading">Test Scores</p>
+        <p class="step-sub">All fields are optional — enter only what you have.</p>
+        <div class="fg">
+          <div class="f">
+            <label for="sat">SAT Score <span class="opt">optional</span></label>
+            <input type="number" id="sat" placeholder="e.g. 1450" min="400" max="1600">
+          </div>
+          <div class="f">
+            <label for="gmat">GMAT Score <span class="opt">optional</span></label>
+            <input type="number" id="gmat" placeholder="e.g. 720" min="200" max="800">
+          </div>
+          <div class="f">
+            <label for="ielts">IELTS Score <span class="opt">optional</span></label>
+            <input type="number" id="ielts" placeholder="e.g. 7.5" min="0" max="9" step="0.5">
+          </div>
+          <div class="f">
+            <label for="gre">GRE Score <span class="opt">optional</span></label>
+            <input type="number" id="gre" placeholder="e.g. 325" min="260" max="340">
+          </div>
+          <div class="f s2">
+            <label for="toefl">TOEFL Score <span class="opt">optional</span></label>
+            <input type="number" id="toefl" placeholder="e.g. 110" min="0" max="120">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: Goals -->
+      <div class="form-step" id="fs4">
+        <p class="step-heading">Your University Goals</p>
+        <p class="step-sub">Tell us where you want to study and what you want to achieve.</p>
+        <div class="fg">
+          <div class="f s2">
+            <label for="targetCountry">Target Country</label>
+            <select id="targetCountry">
+              <option value="" disabled selected>Select a country…</option>
+              <option value="United Kingdom">🇬🇧 United Kingdom</option>
+              <option value="United States">🇺🇸 United States</option>
+              <option value="Canada">🇨🇦 Canada</option>
+              <option value="Australia">🇦🇺 Australia</option>
+              <option value="Germany">🇩🇪 Germany</option>
+              <option value="France">🇫🇷 France</option>
+              <option value="Netherlands">🇳🇱 Netherlands</option>
+              <option value="Singapore">🇸🇬 Singapore</option>
+              <option value="Switzerland">🇨🇭 Switzerland</option>
+              <option value="Japan">🇯🇵 Japan</option>
+              <option value="South Korea">🇰🇷 South Korea</option>
+              <option value="Ireland">🇮🇪 Ireland</option>
+              <option value="New Zealand">🇳🇿 New Zealand</option>
+              <option value="Sweden">🇸🇪 Sweden</option>
+              <option value="Denmark">🇩🇰 Denmark</option>
+              <option value="Italy">🇮🇹 Italy</option>
+              <option value="Spain">🇪🇸 Spain</option>
+              <option value="China">🇨🇳 China</option>
+              <option value="Hong Kong">🇭🇰 Hong Kong</option>
+              <option value="UAE">🇦🇪 UAE</option>
+              <option value="India">🇮🇳 India</option>
+              <option value="Other">🌍 Other</option>
+            </select>
+          </div>
+          <div class="f s2">
+            <label for="dreamUniv">Dream University</label>
+            <input type="text" id="dreamUniv" placeholder="e.g. University of Oxford, Harvard…">
+          </div>
+          <div class="f s2">
+            <label for="dreamCourse">Intended Course / Major <span class="opt">optional</span></label>
+            <input type="text" id="dreamCourse" placeholder="e.g. Medicine, Computer Science, Law…">
+          </div>
+          <div class="f s2">
+            <label for="notes">Anything else we should know? <span class="opt">optional</span></label>
+            <textarea id="notes" placeholder="Achievements, challenges, extracurriculars, special circumstances…"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /intake-body -->
+
+    <div class="intake-foot">
+      <button class="btn-back" id="btnBack" onclick="prevStep()">← Back</button>
+      <span class="step-ct" id="stepCt">Step 1 of 4</span>
+      <button class="btn-next" id="btnNext" onclick="nextStep()">Continue →</button>
+    </div>
+
   </div>
 </div>
 
-<!-- MAIN -->
-<main>
-  <!-- Empty State -->
-  <div class="empty-state" id="emptyState">
-    <h2>Your Story Begins Here</h2>
-    <p>Tell us your dream university and subject. Our AI will architect a complete admissions roadmap — from academics and extracurriculars to personal statement strategy.</p>
+<!-- ══════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════ -->
+<div id="mainApp">
+
+  <header>
+    <div class="eyebrow"><span class="star">✦</span> EduQuest <span class="star">✦</span></div>
+    <h1>Narrative Architects for<br><em>Top University Admissions</em></h1>
+    <p class="subtitle">We craft the story of your academic ambition — mapping your path to the world's most prestigious institutions with precision and purpose.</p>
+    <div class="features">
+      <span class="feature-pill">✦ Personalised Roadmaps</span>
+      <span class="feature-pill">✦ Admission Strategy</span>
+      <span class="feature-pill">✦ AI-Powered Guidance</span>
+      <span class="feature-pill">✦ Essay Narrative Building</span>
+    </div>
+  </header>
+
+  <div class="search-section">
+    <div class="search-wrap">
+      <div class="search-input-wrap">
+        <span class="search-icon">✦</span>
+        <input type="text" id="userInput" placeholder="e.g. I want to get into Oxford for Medicine…">
+      </div>
+      <button class="btn-generate" onclick="generateCareer()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Craft My Path
+      </button>
+    </div>
+    <div class="chips">
+      <span class="chip" onclick="fillChip('I want to get into Oxford for Medicine')">🏛️ Oxford Medicine</span>
+      <span class="chip" onclick="fillChip('I want to study Computer Science at MIT')">💻 MIT CS</span>
+      <span class="chip" onclick="fillChip('I want to study Law at Harvard')">⚖️ Harvard Law</span>
+      <span class="chip" onclick="fillChip('I want to study Business at London School of Economics')">📊 LSE Business</span>
+      <span class="chip" onclick="fillChip('I want to study Architecture at Yale')">🏗️ Yale Architecture</span>
+      <span class="chip" onclick="fillChip('I want to study Film at NYU Tisch')">🎬 NYU Film</span>
+    </div>
   </div>
 
-  <!-- Feature Cards in empty state -->
-  <div class="feature-grid" id="featureGrid">
-    <div class="feature-card">
-      <div class="fc-icon">📖</div>
-      <h4>Narrative Strategy</h4>
-      <p>We build a compelling personal story that top admissions officers remember.</p>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🗺️</div>
-      <h4>Academic Roadmap</h4>
-      <p>Step-by-step subject, grade, and qualification guidance for your target university.</p>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🏆</div>
-      <h4>Competitive Edge</h4>
-      <p>Extracurricular, research, and portfolio strategies that set you apart from the crowd.</p>
-    </div>
-  </div>
+  <main>
+    <div class="profile-banner" id="profileBanner" style="display:none;"></div>
 
-  <!-- Loading -->
-  <div class="loading-wrap" id="loadingWrap">
-    <div class="loader-ring"></div>
-    <p class="loading-text">Architecting your narrative<span>.</span><span>.</span><span>.</span></p>
-  </div>
+    <div class="empty-state" id="emptyState">
+      <h2>Your Story Begins Here</h2>
+      <p>Tell us your dream university and subject. Our AI will architect a complete admissions roadmap — from academics and extracurriculars to personal statement strategy.</p>
+    </div>
 
-  <!-- Output -->
-  <div id="output"></div>
-</main>
+    <div class="feature-grid" id="featureGrid">
+      <div class="feature-card"><div class="fc-icon">📖</div><h4>Narrative Strategy</h4><p>We build a compelling personal story that top admissions officers remember.</p></div>
+      <div class="feature-card"><div class="fc-icon">🗺️</div><h4>Academic Roadmap</h4><p>Step-by-step subject, grade, and qualification guidance for your target university.</p></div>
+      <div class="feature-card"><div class="fc-icon">🏆</div><h4>Competitive Edge</h4><p>Extracurricular, research, and portfolio strategies that set you apart from the crowd.</p></div>
+    </div>
+
+    <div class="loading-wrap" id="loadingWrap">
+      <div class="loader-ring"></div>
+      <p class="loading-text">Architecting your narrative<span>.</span><span>.</span><span>.</span></p>
+    </div>
+
+    <div id="output"></div>
+  </main>
+</div>
 
 <script>
-  function fillChip(text) {
-    document.getElementById('userInput').value = text;
-    document.getElementById('userInput').focus();
-  }
+/* ─── FORM LOGIC ─── */
+let step = 1;
+const TOTAL = 4;
+let profile = {};
 
-  async function generateCareer() {
-    const inputField = document.getElementById('userInput');
-    const input = inputField.value.trim();
-    const output = document.getElementById('output');
-    const loadingWrap = document.getElementById('loadingWrap');
-    const emptyState = document.getElementById('emptyState');
-    const featureGrid = document.getElementById('featureGrid');
-
-    if (!input) {
-      inputField.focus();
-      inputField.style.borderColor = '#d07070';
-      setTimeout(() => inputField.style.borderColor = '', 1200);
-      return;
-    }
-
-    emptyState.style.display = 'none';
-    featureGrid.style.display = 'none';
-    output.innerHTML = '';
-    loadingWrap.classList.add('active');
-
-    try {
-      const response = await fetch('/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: input })
-      });
-
-      if (!response.ok) throw new Error('Server error');
-      const data = await response.json();
-
-      const card = document.createElement('div');
-      card.className = 'result-card';
-      card.innerHTML = `
-        <div class="card-header">
-          <div class="icon">🏛️</div>
-          <div class="card-header-text">
-            <small>Admissions Roadmap</small>
-            <strong>${input.charAt(0).toUpperCase() + input.slice(1)}</strong>
-          </div>
-        </div>
-        <div class="card-body">${(data.result || '').trim()}</div>
-        <div class="card-divider"></div>
-        <div class="card-footer">
-          <span class="card-footer-brand"><em>Narrative <span>Architects</span></em></span>
-          <span class="card-footer-tag">AI-generated · Verify with a counsellor</span>
-        </div>
-      `;
-
-      output.appendChild(card);
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    } catch (err) {
-      output.innerHTML = `
-        <div class="error-card">
-          <h2 style="font-family:'Cormorant Garamond',serif;font-style:italic;margin-bottom:10px;">Something went wrong</h2>
-          <p>Please check your connection and try again.</p>
-        </div>
-      `;
-    } finally {
-      loadingWrap.classList.remove('active');
+function syncProgress() {
+  for (let i = 1; i <= TOTAL; i++) {
+    const dot = document.getElementById('pd' + i);
+    const lbl = document.getElementById('pl' + i);
+    dot.className = 'prog-dot';
+    lbl.className = 'prog-label';
+    if (i < step) { dot.classList.add('done'); dot.textContent = '✓'; }
+    else if (i === step) { dot.classList.add('active'); dot.textContent = i; lbl.classList.add('active'); }
+    else { dot.textContent = i; }
+    if (i < TOTAL) {
+      document.getElementById('pline' + i).className = 'prog-line' + (i < step ? ' done' : '');
     }
   }
+  document.getElementById('stepCt').textContent = `Step ${step} of ${TOTAL}`;
+  document.getElementById('btnBack').style.visibility = step === 1 ? 'hidden' : 'visible';
+  const nb = document.getElementById('btnNext');
+  nb.textContent = step === TOTAL ? '✦ Build My Roadmap' : 'Continue →';
+}
 
-  document.getElementById('userInput').addEventListener('keypress', e => {
-    if (e.key === 'Enter') generateCareer();
-  });
+function validate(s) {
+  document.querySelectorAll('#fs' + s + ' .err').forEach(e => e.classList.remove('err'));
+  if (s === 1) {
+    const n = document.getElementById('fullName');
+    const e = document.getElementById('email');
+    let ok = true;
+    if (!n.value.trim()) { n.classList.add('err'); ok = false; }
+    if (!e.value.trim() || !e.value.includes('@')) { e.classList.add('err'); ok = false; }
+    return ok;
+  }
+  if (s === 4) {
+    const u = document.getElementById('dreamUniv');
+    const c = document.getElementById('targetCountry');
+    let ok = true;
+    if (!u.value.trim()) { u.classList.add('err'); ok = false; }
+    if (!c.value) { c.classList.add('err'); ok = false; }
+    return ok;
+  }
+  return true;
+}
+
+function gather(s) {
+  if (s === 1) {
+    profile.fullName    = document.getElementById('fullName').value.trim();
+    profile.age         = document.getElementById('age').value.trim();
+    profile.phone       = document.getElementById('phone').value.trim();
+    profile.email       = document.getElementById('email').value.trim();
+    profile.country     = document.getElementById('country').value.trim();
+    profile.city        = document.getElementById('city').value.trim();
+    profile.nationality = document.getElementById('nationality').value.trim();
+  } else if (s === 2) {
+    const r = document.querySelector('input[name="edu"]:checked');
+    profile.educationLevel  = r ? r.value : '';
+    profile.fieldOfStudy    = document.getElementById('fos').value.trim();
+    profile.cgpa            = document.getElementById('cgpa').value.trim();
+    profile.graduationYear  = document.getElementById('grady').value.trim();
+    profile.gapYears        = document.getElementById('gapyr').value.trim();
+    profile.workExperience  = document.getElementById('workexp').value.trim();
+  } else if (s === 3) {
+    profile.satScore  = document.getElementById('sat').value.trim();
+    profile.gmatScore = document.getElementById('gmat').value.trim();
+    profile.ieltsScore= document.getElementById('ielts').value.trim();
+    profile.greScore  = document.getElementById('gre').value.trim();
+    profile.toeflScore= document.getElementById('toefl').value.trim();
+  } else if (s === 4) {
+    profile.targetCountry = document.getElementById('targetCountry').value;
+    profile.dreamUniversity= document.getElementById('dreamUniv').value.trim();
+    profile.dreamCourse   = document.getElementById('dreamCourse').value.trim();
+    profile.notes         = document.getElementById('notes').value.trim();
+  }
+}
+
+function nextStep() {
+  if (!validate(step)) return;
+  gather(step);
+  if (step < TOTAL) {
+    document.getElementById('fs' + step).classList.remove('visible');
+    step++;
+    document.getElementById('fs' + step).classList.add('visible');
+    syncProgress();
+    document.getElementById('intakeBody').scrollTop = 0;
+  } else {
+    submitProfile();
+  }
+}
+
+function prevStep() {
+  if (step > 1) {
+    document.getElementById('fs' + step).classList.remove('visible');
+    step--;
+    document.getElementById('fs' + step).classList.add('visible');
+    syncProgress();
+  }
+}
+
+async function submitProfile() {
+  const btn = document.getElementById('btnNext');
+  btn.textContent = 'Saving…';
+  btn.disabled = true;
+
+  try {
+    await fetch('/submit-profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(profile)
+    });
+  } catch(_) { /* silent */ }
+
+  if (profile.dreamUniversity) {
+    const hint = profile.dreamCourse
+      ? `I want to study ${profile.dreamCourse} at ${profile.dreamUniversity}`
+      : `I want to get into ${profile.dreamUniversity}`;
+    document.getElementById('userInput').value = hint;
+  }
+
+  renderProfileBanner();
+  document.getElementById('intakeOverlay').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'flex';
+}
+
+function renderProfileBanner() {
+  const b = document.getElementById('profileBanner');
+  const initials = (profile.fullName || 'S').split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+  const tags = [
+    profile.educationLevel && profile.educationLevel,
+    profile.targetCountry && profile.targetCountry,
+    profile.cgpa && profile.cgpa,
+    profile.dreamUniversity && '🏛️ ' + profile.dreamUniversity
+  ].filter(Boolean);
+
+  b.style.display = 'flex';
+  b.innerHTML = `
+    <div class="p-avatar">${initials}</div>
+    <div class="p-info">
+      <strong>${profile.fullName || 'Student'}</strong>
+      <small>${[profile.email, profile.city].filter(Boolean).join(' · ')}</small>
+    </div>
+    <div class="p-tags">${tags.map(t => `<span class="p-tag">${t}</span>`).join('')}</div>
+  `;
+}
+
+/* ─── MAIN APP LOGIC ─── */
+function fillChip(t) {
+  document.getElementById('userInput').value = t;
+  document.getElementById('userInput').focus();
+}
+
+async function generateCareer() {
+  const inp = document.getElementById('userInput');
+  const query = inp.value.trim();
+  const output = document.getElementById('output');
+  const loader = document.getElementById('loadingWrap');
+  const empty = document.getElementById('emptyState');
+  const fg = document.getElementById('featureGrid');
+
+  if (!query) {
+    inp.style.borderColor = '#d07070';
+    inp.focus();
+    setTimeout(() => inp.style.borderColor = '', 1200);
+    return;
+  }
+
+  empty.style.display = 'none';
+  fg.style.display = 'none';
+  output.innerHTML = '';
+  loader.classList.add('active');
+
+  try {
+    const res = await fetch('/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, profile })
+    });
+
+    if (!res.ok) throw new Error('Server error');
+    const data = await res.json();
+
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="icon">🏛️</div>
+        <div class="card-header-text">
+          <small>Admissions Roadmap${profile.fullName ? ' · ' + profile.fullName : ''}</small>
+          <strong>${query.charAt(0).toUpperCase() + query.slice(1)}</strong>
+        </div>
+      </div>
+      <div class="card-body">${(data.result || '').trim()}</div>
+      <div class="card-divider"></div>
+      <div class="card-footer">
+        <span class="card-footer-brand"><em>Narrative <span>Architects</span></em></span>
+        <span class="card-footer-tag">AI-generated · Verify with a counsellor</span>
+      </div>
+    `;
+    output.appendChild(card);
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  } catch(e) {
+    output.innerHTML = `
+      <div class="error-card">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-style:italic;margin-bottom:10px;">Something went wrong</h2>
+        <p>Please check your connection and try again.</p>
+      </div>
+    `;
+  } finally {
+    loader.classList.remove('active');
+  }
+}
+
+document.getElementById('userInput').addEventListener('keypress', e => {
+  if (e.key === 'Enter') generateCareer();
+});
+
+syncProgress();
 </script>
 </body>
 </html>
