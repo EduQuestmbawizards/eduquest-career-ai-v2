@@ -133,8 +133,18 @@ STRICT STRUCTURE (FOLLOW EXACTLY):
 
 <h2>🏛️ Admissions Roadmap: {user_input}</h2>
 
-<h3>🎓 About This Program & University</h3>
-<p>Explain the university, the program, its global reputation, what makes it special, and what kind of students it seeks. Be specific.</p>
+<h3>🎓 Why This University Fits You</h3>
+<p> Do Not give wikipedia description.
+
+Explain:
+- why this university matches THIS candidate
+- what type of students the university seeks
+- where candidate aligns
+- where candidate currently falls short
+- one unique positioning opportunity
+
+Maximum: 150 words
+</p>
 
 <h3>📋 Entry Requirements</h3>
 <ul>
@@ -142,12 +152,58 @@ STRICT STRUCTURE (FOLLOW EXACTLY):
 <li>Standardised test scores (SAT, ACT, LNAT, BMAT, UKCAT etc.) — if the student has scores, comment on how they compare</li>
 <li>Subject prerequisites</li>
 <li>Language requirements — reference the student's IELTS/TOEFL score if provided</li>
+<li>Standardised test scores (SAT, ACT, LNAT, BMAT, UKCAT etc.) — if the student has scores, comment on how they compare</li>
+<li>
+Determine whether SAT, ACT, GRE, GMAT, LNAT, UCAT/UKCAT, BMAT or other standardized tests are actually required or recommended for this specific university/program.
+
+If the student has scores:
+- Compare them with competitive applicant ranges
+- Explain whether they strengthen, weaken, or adequately support the application
+
+If scores are missing:
+- Mention whether taking the exam could strategically improve competitiveness
+
+If not required:
+- Explicitly state that the test is not required and whether submitting it can still provide an advantage
+</li>
 </ul>
 
 <h3>📊 Your Profile Assessment</h3>
 <p>
-If a student profile was provided, give a candid but encouraging assessment of how their current academic standing, scores, and background position them for this application.
-Point out strengths to build on and gaps to address. If no profile data is available, describe what a competitive applicant's profile looks like.
+Assess using:
+
+Academic Strength:
+Leadership Strength:
+Technical Strength:
+Exposure Strength:
+
+Then identify:
+
+Critical Gaps:
+Differentiation Gap:
+Narrative Gap:
+
+Do not praise without evidence.
+Think like admissions committee.
+</p>
+
+<h3>🚀 Signature Work Development</h3>
+
+<p>
+
+Recommend ONE high-leverage flagship project.
+
+Format:
+
+Problem:
+Execution:
+Tools:
+Expected outcome:
+University value:
+Career value:
+
+Must align with student field.
+
 </p>
 
 <h3>📖 Building Your Narrative</h3>
@@ -158,12 +214,22 @@ This is the core of what Narrative Architects specialises in.
 </p>
 
 <h3>🏆 Extracurriculars & Profile Building</h3>
-<ul>
-<li>Research / internship / shadowing experience relevant to this program</li>
-<li>Leadership roles, competitions, awards</li>
-<li>Reading, projects, and intellectual engagement beyond school</li>
-<li>Community impact and character-building activities</li>
-</ul>
+
+Generate:
+
+- Broad categories of activities
+- Mention possible profile directions
+- Mention examples without giving complete implementation steps
+- Focus on intellectual curiosity, leadership and impact
+
+Avoid:
+- step-by-step execution plans
+- exact project implementation details
+- complete resource lists
+
+Keep recommendations strategic rather than exhaustive.
+
+Subtly indicate that stronger profile architecture often requires personalised guidance.
 
 <h3>✍️ Personal Statement / Essay Strategy</h3>
 <p>
@@ -178,20 +244,64 @@ If this university interviews (Oxford tutorials, Oxbridge, Harvard, etc.), expla
 Provide tips on how to prepare, what interviewers are looking for, and how to demonstrate intellectual curiosity.
 </p>
 
-<h3>🛤️ Year-by-Year Roadmap</h3>
+
+<h3>🛤️ Strategic Action Roadmap</h3>
+
 <ul>
-<li>Year 1-2 (Age 14-16): Foundation academics, reading widely, discovering passion</li>
-<li>Year 3 (Age 16-17): Qualifications, first extracurriculars, early research</li>
-<li>Year 4 (Age 17-18): Applications, personal statement, interview prep, final push</li>
+
+<li>Immediate Next Steps</li>
+
+<li>Next 6 Months</li>
+
+<li>Next 1 Year</li>
+
+<li>Before Application Submission</li>
+
 </ul>
+
+<h3>🤖 Future Readiness Analysis</h3>
+
+<p>
+
+Explain:
+
+- How AI impacts this career
+- Which skills become valuable
+- Which human skills remain irreplaceable
+- How this student should prepare
+
+</p>
+
+<h3>🎯 Strategic Positioning Statement</h3>
+
+<p>
+
+Generate one memorable statement under 20 words.
+
+Examples:
+
+"Technology-enabled healthcare leaders will define the next decade."
+
+"Future finance leaders combine analytical depth with human judgment."
+
+</p>
 
 <h3>📘 How Narrative Architects Helps You</h3>
 <p>
 Narrative Architects provides elite, bespoke university admissions consulting. We specialise in helping students craft powerful personal narratives that resonate with admissions committees at Oxford, Cambridge, Harvard, MIT, LSE, and other world-leading institutions.
 Our approach combines strategic academic planning with authentic storytelling — ensuring your application doesn't just meet requirements, but genuinely stands out.
 </p>
+<p>
+Strong applications are rarely built through isolated achievements. 
+At EduQuest, we help students transform experiences into compelling narratives that feel authentic and strategically aligned.
+</p>
 
 <h3>📞 Begin Your Journey</h3>
+<p>
+Elite applications are rarely built accidentally. They are intentionally designed through strategy, positioning and long-term planning.
+
+EduQuest helps students transform ambitions into globally competitive profiles.
+</p>
 <p>
 Email: contact@eduquest.org.in<br>
 Phone: +91 99580 41888
@@ -209,8 +319,17 @@ RULES:
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
+            model="gpt-4o",
+            messages=[
+                {
+                    "role":"system",
+                    "content":"You are a senior university admissions strategist and profile architect. Think deeply before writing."
+                },
+                {
+                    "role":"user",
+                    "content":prompt
+                }
+            ],
             temperature=0.7
         )
 
