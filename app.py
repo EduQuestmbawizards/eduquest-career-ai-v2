@@ -376,7 +376,16 @@ RULES:
 
         output = response.choices[0].message.content.strip()
 
-        if not output or "<h2>" not in output or "<ul>" not in output or "```" in output:
+        # Robustly clean markdown code block wrap if returned by the LLM
+        if output.startswith("```"):
+            lines = output.splitlines()
+            if lines[0].startswith("```"):
+                lines = lines[1:]
+            if lines and lines[-1].startswith("```"):
+                lines = lines[:-1]
+            output = "\n".join(lines).strip()
+
+        if not output or "<h2>" not in output or "<ul>" not in output:
             raise ValueError("Invalid output format")
 
         return jsonify({"result": output})
