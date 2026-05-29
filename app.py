@@ -165,30 +165,104 @@ Maximum: 150 words
 </p>
 
 <h3>📋 Entry Requirements & Competitive Exam Strategy</h3>
-For the Entry Requirements & Competitive Exam Strategy section:
 
-Format the response as a proper HTML unordered list.
+For this section, generate a professional HTML unordered list.
 
-Do NOT write labels like:
-"Mandatory Exams:"
-"Recommended Exams:"
-"Optional Exams:"
+CRITICAL REQUIREMENT:
 
-Instead generate:
+Use only CURRENTLY ACTIVE admissions pathways and entrance examinations.
+
+Do NOT use historical admissions requirements.
+
+Do NOT mention discontinued exams under any circumstance.
+
+Examples:
+- BMAT has been discontinued and must never be recommended.
+- Use UCAT where applicable for UK medical admissions.
+- If an admissions pathway has changed, use the latest widely adopted pathway.
+
+When discussing exams, think step-by-step:
+
+1. Identify country
+2. Identify field
+3. Identify education level
+4. Determine current admissions pathway
+5. Recommend only active examinations
+
+If you are uncertain, state:
+"Requirements vary by university and should be verified with the latest admissions cycle."
+rather than providing potentially outdated information.
+
+The AI must automatically determine:
+
+* Student's target field
+* Target country
+* Education stage (School / Undergraduate / Graduate)
+* Current admissions pathway
+
+Then explain:
 
 <ul>
 
-<li><strong>Required Exams:</strong> Explain required exams and competitive score ranges.</li>
+<li>
+<strong>Required Exams:</strong>
+Mention only currently active and valid entrance examinations required for this pathway.
+Include competitive score ranges where applicable.
+Do NOT mention discontinued exams.
+</li>
 
-<li><strong>Recommended Exams:</strong> Explain optional exams that strengthen applications.</li>
+<li>
+<strong>Recommended Exams:</strong>
+Mention exams that may not be mandatory but can strengthen admissions, scholarships, or global competitiveness.
+Include target score ranges when relevant.
+</li>
 
-<li><strong>English Proficiency:</strong> Mention IELTS/TOEFL where applicable.</li>
+<li>
+<strong>English Proficiency:</strong>
+Mention IELTS, TOEFL, Duolingo, PTE, or other accepted language tests where applicable.
+Provide competitive score ranges.
+If the student already has a score, compare it against competitive applicants.
+</li>
 
-<li><strong>Scholarship Positioning:</strong> Explain how scores affect competitiveness.</li>
+<li>
+<strong>Scholarship & Competitiveness Positioning:</strong>
+Explain how strong scores may improve admissions competitiveness, scholarship opportunities, or academic positioning.
+</li>
 
 </ul>
 
-Never output numbered instructions.
+Additional Rules:
+
+* Use current admissions pathways only.
+* Never recommend discontinued examinations.
+* If requirements vary by university, mention that briefly.
+* If no entrance exam is typically required, explicitly state that.
+* If an exam is optional but strategically valuable, explain why.
+* Do not output generic statements.
+* Adapt recommendations to the student's intended field and country.
+
+Examples:
+
+Medicine + UK:
+→ UCAT
+
+Medicine + Australia:
+→ UCAT ANZ
+
+Medicine + Canada:
+→ Explain that direct MBBS pathways are generally unavailable and admissions pathways differ.
+
+Law + UK:
+→ LNAT where applicable
+
+MBA:
+→ GMAT / GRE
+
+Engineering:
+→ Mention standardized tests only where relevant.
+
+Keep the section concise, practical, and personalized.
+
 
 
 <h3>📊 Your Profile Assessment</h3>
