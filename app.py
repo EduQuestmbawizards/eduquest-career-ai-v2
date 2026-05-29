@@ -214,7 +214,7 @@ Do NOT mention discontinued exams.
 <li>
 <strong>Recommended Exams:</strong>
 Mention exams that may not be mandatory but can strengthen admissions, scholarships, or global competitiveness.
-Include target score ranges when relevant.
+Include target score ranges when relevant. But keep that in mind that do not mention any exam that is no longer used.
 </li>
 
 <li>
@@ -339,6 +339,29 @@ Generate 1–2 paragraphs explaining profile growth naturally.
 Then provide 3–4 concise bullet recommendations.
 
 Avoid implementation details.
+
+At the end of the Strategic Profile Building section, generate ONE short premium insight about profile building.
+
+Rules:
+
+* Maximum 2 sentences
+* Vary wording every time
+* Focus on identity, narrative, long-term growth, intentionality, or personal evolution
+* Never repeat the exact same sentence
+* Avoid sounding like a sales pitch
+* Maintain a premium admissions consulting tone
+
+Example themes:
+
+* Profile building is a long-term evolution of identity.
+* Strong narratives require time, consistency, and reflection.
+* Meaningful differentiation emerges gradually.
+* Universities remember stories, not activity lists.
+* Identity cannot be manufactured overnight.
+* Great profiles are nurtured, not assembled.
+* Narrative development is an ongoing process.
+* Depth compounds over time.
+
 
 <h3>🤖 AI & Data Science Relevance in Your Career Path</h3>
 Explain:
