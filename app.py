@@ -4,11 +4,23 @@ import os
 import json
 from datetime import datetime
 from dotenv import load_dotenv
+from supabase import create_client, Client
 
 app = Flask(__name__)
 load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# Initialize Supabase client
+supabase_url = os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+supabase_key = os.getenv("SUPABASE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY")
+supabase: Client = None
+
+if supabase_url and supabase_key and "your_supabase" not in supabase_url:
+    try:
+        supabase = create_client(supabase_url, supabase_key)
+    except Exception as e:
+        print("Failed to initialize Supabase client:", e)
 
 # ── In-memory store (swap for a DB in production) ──
 student_profiles = {}
@@ -29,6 +41,31 @@ def submit_profile():
     email = data.get("email", "").strip().lower()
     if email:
         student_profiles[email] = data
+
+        # Supabase Integration: Save student and profile submission to single table
+        if supabase:
+            try:
+                # Prepare student record
+                student_data = {
+                    "full_name": data.get("fullName", "").strip(),
+                    "email": email,
+                    "phone": data.get("phone", "").strip() or None,
+                    "city": data.get("city", "").strip() or None,
+                    "country": data.get("country", "").strip() or None,
+                    "nationality": data.get("nationality", "").strip() or None,
+                    "education_level": data.get("educationLevel", "").strip() or None,
+                    "field_of_study": data.get("fieldOfStudy", "").strip() or None,
+                    "raw_form_data": data
+                }
+                
+                # Upsert into single consolidated table
+                supabase.table("career_students_data").upsert(
+                    student_data,
+                    on_conflict="email"
+                ).execute()
+            except Exception as e:
+                # Log error gracefully, do not fail the request
+                print("Supabase profile save error:", e)
 
     # ── Optional: log to a JSONL file so you never lose leads ──
     try:
@@ -484,6 +521,55 @@ RULES:
 
         if not output or "<h2>" not in output or "<ul>" not in output:
             raise ValueError("Invalid output format")
+
+        # Supabase Integration: Save generated roadmap or career cluster report to single table
+        if supabase:
+            try:
+                email = profile.get("email", "").strip().lower()
+                if email:
+                    # Determine if this is a career cluster report or admissions roadmap
+                    is_career_query = any(w in user_input.lower() for w in ["career", "job", "work", "profession", "cluster", "industry", "employ"])
+                    
+                    # Get fields
+                    target_univ = profile.get("dreamUniversity", "").strip() or None
+                    target_cntry = profile.get("targetCountry", "").strip() or None
+                    target_fld = profile.get("dreamCourse", "").strip() or profile.get("fieldOfStudy", "").strip() or None
+
+                    # Prepare updates based on query type
+                    update_data = {}
+                    if is_career_query:
+                        update_data = {
+                            "career_interest": target_fld or user_input,
+                            "generated_response": output
+                        }
+                    else:
+                        update_data = {
+                            "target_university": target_univ,
+                            "target_country": target_cntry,
+                            "target_field": target_fld,
+                            "generated_html": output
+                        }
+
+                    # Assemble complete upsert record
+                    student_data = {
+                        "email": email,
+                        "full_name": profile.get("fullName", "").strip() or None,
+                        "phone": profile.get("phone", "").strip() or None,
+                        "city": profile.get("city", "").strip() or None,
+                        "country": profile.get("country", "").strip() or None,
+                        "nationality": profile.get("nationality", "").strip() or None,
+                        "education_level": profile.get("educationLevel", "").strip() or None,
+                        "field_of_study": profile.get("fieldOfStudy", "").strip() or None,
+                    }
+                    student_data.update(update_data)
+
+                    # Upsert to the single consolidated table
+                    supabase.table("career_students_data").upsert(
+                        student_data,
+                        on_conflict="email"
+                    ).execute()
+            except Exception as db_err:
+                print("Supabase report save error:", db_err)
 
         return jsonify({"result": output})
 
